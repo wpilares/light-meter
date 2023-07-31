@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.scss';
 
-function App() {
-  const [count, setCount] = useState(0)
+import React, { useState } from 'react';
+import { departmentData } from './data';
+
+function App(): React.ReactElement {
+  const [selectedDate, setSelectedDate] = useState<string>('');
+
+  console.log(new Date());
+
+  const handleDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const dateValue = event.target.value;
+    setSelectedDate(dateValue);
+    console.log('Fecha seleccionada:', dateValue);
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="light">
+      <div className="form">
+        <div className="title">Lectura Medidores</div>
+        <div className="input-label">
+          <label className="label">Fecha</label>
+          <input
+            className="input"
+            type="date"
+            value={selectedDate}
+            onChange={handleDateChange}
+          />
+        </div>
+        {departmentData.map((department, index) => (
+          <div className="input-label" key={index}>
+            <label className="label">{department.name}</label>
+            <input className="input" placeholder={department.placeholder} />
+          </div>
+        ))}
+        <button>TOMAR CAPTURA</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

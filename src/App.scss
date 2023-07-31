@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Kanit:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #18191A;
+  font-family: 'Jura', sans-serif;
+}
+
+.light {
+  margin: auto;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+
+  .form {
+    width: 304px;
+    border-radius: 19px;
+    background: radial-gradient(97.61% 55.99% at 50.15% 44.01%, rgba(22, 81, 123, 0.69) 0%, #1E1A36 100%);
+    padding: 20px;
+
+    .title {
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 50px;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    .date {
+      height: 41px;
+      border-radius: 6px;
+      background: #DFDADA;
+      padding-left: 10px;
+      margin-bottom: 21px;
+    }
+
+    .input-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: 21px;
+
+      .label {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        color: white;
+      }
+
+      .input {
+        height: 41px;
+        border-radius: 6px;
+        background: #DFDADA;
+        padding: 0 10px;
+      }
+
+    }
+
+    button {
+      border-radius: 6px;
+      background: #DFDADA;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px 32px;
+      cursor: pointer;
+      justify-self: center;
+    }
+
+  }
+}
+
+
+
