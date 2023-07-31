@@ -4,9 +4,16 @@ import React, { useState } from 'react';
 import { departmentData } from './data';
 
 function App(): React.ReactElement {
-  const [selectedDate, setSelectedDate] = useState<string>('');
+  const formatDate = (date: Date): string => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear());
+    return `${day}-${month}-${year}`;
+  };
 
-  console.log(new Date());
+  const currentDate: string = formatDate(new Date());
+
+  const [selectedDate, setSelectedDate] = useState<string>(currentDate);
 
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -25,7 +32,7 @@ function App(): React.ReactElement {
           <input
             className="input"
             type="date"
-            value={selectedDate}
+            defaultValue={selectedDate}
             onChange={handleDateChange}
           />
         </div>
