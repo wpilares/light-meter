@@ -2,6 +2,7 @@ import './App.scss';
 
 import React, { useState } from 'react';
 import { departmentData } from './data';
+import html2canvas from 'html2canvas';
 
 function App(): React.ReactElement {
   const formatDate = (date: Date): string => {
@@ -14,12 +15,26 @@ function App(): React.ReactElement {
   const currentDate: string = formatDate(new Date());
 
   const [selectedDate, setSelectedDate] = useState<string>(currentDate);
+  const [isButtonVisible, setButtonVisible] = useState(true);
 
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     const dateValue = event.target.value;
     setSelectedDate(dateValue);
+  };
+
+  const handleCapture = (): void => {
+    setButtonVisible(false);
+
+    void html2canvas(document.body).then((canvas) => {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL();
+      link.download = 'captura.png';
+      link.click();
+
+      setButtonVisible(true); // Vuelve a mostrar el botón después de tomar la captura
+    });
   };
 
   return (
@@ -41,7 +56,11 @@ function App(): React.ReactElement {
             <input className="input" placeholder={department.placeholder} />
           </div>
         ))}
-        <button>TOMAR CAPTURA</button>
+        <button
+          onClick={handleCapture}
+          style={{ display: isButtonVisible ? 'block' : 'none' }}>
+          TOMAR CAPTURA
+        </button>
       </div>
     </div>
   );
