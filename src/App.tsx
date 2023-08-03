@@ -1,6 +1,6 @@
 import './App.scss';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { departmentData } from './data';
 import html2canvas from 'html2canvas';
 
@@ -17,6 +17,8 @@ function App(): React.ReactElement {
   const [selectedDate, setSelectedDate] = useState<string>(currentDate);
   const [isButtonVisible, setButtonVisible] = useState(true);
 
+  const lightDivRef = useRef<HTMLDivElement>(null);
+
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
@@ -25,20 +27,22 @@ function App(): React.ReactElement {
   };
 
   const handleCapture = (): void => {
-    setButtonVisible(false);
+    if (lightDivRef.current != null) {
+      setButtonVisible(false);
 
-    void html2canvas(document.body).then((canvas) => {
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL();
-      link.download = 'captura.png';
-      link.click();
+      void html2canvas(lightDivRef.current).then((canvas) => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL();
+        link.download = 'captura.png';
+        link.click();
 
-      setButtonVisible(true); // Vuelve a mostrar el botón después de tomar la captura
-    });
+        setButtonVisible(true); // Vuelve a mostrar el botón después de tomar la captura
+      });
+    }
   };
 
   return (
-    <div className="light">
+    <div className="light" ref={lightDivRef}>
       <div className="form">
         <div className="title">Lectura Medidores</div>
         <div className="input-label">
