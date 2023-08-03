@@ -30,7 +30,7 @@ function App(): React.ReactElement {
     if (lightDivRef.current != null) {
       setButtonVisible(false);
 
-      void html2canvas(lightDivRef.current).then((canvas) => {
+      void html2canvas(document.body).then((canvas) => {
         const link = document.createElement('a');
         link.href = canvas.toDataURL();
         link.download = 'captura.png';
