@@ -13,10 +13,11 @@ body, html {
   height: 100vh;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 20px;
 
   .form {
     width: 304px;
-    border-radius: 19px;
     background: radial-gradient(97.61% 55.99% at 50.15% 44.01%, rgba(22, 81, 123, 0.69) 0%, #1E1A36 100%);
     padding: 20px;
 
@@ -57,18 +58,19 @@ body, html {
       }
 
     }
-
-    button {
-      border-radius: 6px;
-      background: #DFDADA;
-      font-size: 15px;
-      font-weight: 700;
-      padding: 10px 32px;
-      cursor: pointer;
-      justify-self: center;
-    }
-
   }
+
+  .button {
+    background: lightblue;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10px 32px;
+    cursor: pointer;
+    justify-self: center;
+    border: none;
+    border-radius: 10px;
+  }
+
 }
 
 
