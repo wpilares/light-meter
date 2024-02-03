@@ -15,9 +15,8 @@ function App(): React.ReactElement {
   const currentDate: string = formatDate(new Date());
 
   const [selectedDate, setSelectedDate] = useState<string>(currentDate);
-  const [isButtonVisible, setButtonVisible] = useState(true);
 
-  const lightDivRef = useRef<HTMLDivElement>(null);
+  const printImageRef = useRef<HTMLDivElement>(null);
 
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -26,24 +25,29 @@ function App(): React.ReactElement {
     setSelectedDate(dateValue);
   };
 
-  const handleCapture = (): void => {
-    if (lightDivRef.current != null) {
-      setButtonVisible(false);
+  const handleCapture = async (): Promise<void> => {
+    const element = printImageRef.current;
 
-      void html2canvas(lightDivRef.current).then((canvas) => {
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL();
-        link.download = 'captura.png';
-        link.click();
-
-        setButtonVisible(true); // Vuelve a mostrar el botón después de tomar la captura
-      });
+    if (element == null) {
+      console.error('Print image element is null');
+      return;
     }
+
+    const canvas = await html2canvas(element);
+
+    const data = canvas.toDataURL('image/jpg');
+    const link = document.createElement('a');
+
+    link.href = data;
+    link.download = 'image.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <div className="light" ref={lightDivRef}>
-      <div className="form">
+    <div className="light">
+      <div className="form" ref={printImageRef}>
         <div className="title">Lectura Medidores</div>
         <div className="input-label">
           <label className="label">Fecha</label>
@@ -60,9 +64,10 @@ function App(): React.ReactElement {
             <input className="input" placeholder={department.placeholder} />
           </div>
         ))}
-        <button
-          onClick={handleCapture}
-          style={{ display: isButtonVisible ? 'block' : 'none' }}>
+      </div>
+      <div>
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <button onClick={handleCapture} className="button">
           TOMAR CAPTURA
         </button>
       </div>
